@@ -1,0 +1,25 @@
+Comments to Address:
+====================
+
+[Reviewer 5 of IROS 2015 submission 1905]
+
+- explaining oscillatory data versus what is shown in the movie
+
+- tradeoff between control/ tracking-accuracy vesus alpha parameter
+
+- clarify distinction from other disturbance-rejection methods
+
+- video was bueno
+
+
+[Reviewer 6 of IROS 2015 submission 1905]
+
+- explain + more graphs towards the explanation of the results so as to support the results shown in the video submission
+
+- disadvantages of such a control method?
+% Computationally intense
+% High memory demands for large neural network
+% Irregular/long training times
+
+- ** actual implementation?
+% This is unlikely to happen (or eve happen for that matter) 
