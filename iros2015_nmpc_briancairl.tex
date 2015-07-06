@@ -1,0 +1,98 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+
+
+
+\input{preamble}
+
+\title{\LARGE \bf
+Trunk Stabilization of Multi-legged Robots \\
+Using On-line Learning via a NARX Neural Network Compensator
+}
+
+
+\author{
+Brian R. Cairl$^{1}$,
+Farshad Khorrami$^{1}$
+\thanks{%
+	$^{1}$All authors are with the Controls/Robotics Research Laboratory (CRRL)
+	at the  Polytechnic School of Engineering,
+	5 Metrotech Center, New York University, Brooklyn, NY 11201.
+}% <-this % stops a space
+\thanks{
+	$^{2}$Thank you to Dr. Prashanth Krishnamurthy for his input on this paper.
+}
+}% <-this % stops a space
+
+
+\begin{document}
+
+\newcommand{\TightSectionBeg}[1]{\vspace{0mm}\section{#1}\vspace{-0.1mm}}
+\newcommand{\TightSectionEnd}{\vspace{-0.1mm}}
+\newcommand{\PostImageCloseSpace}{\vspace{-4mm}}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+\input{abstract}
+
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+\input{introduction}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\TightSectionBeg{QUADRUPED DYNAMICS}
+\input{system_dynamics}
+\TightSectionEnd
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\TightSectionBeg{NARX-NETWORK COMPENSATOR}
+\input{controller}
+\TightSectionEnd
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\TightSectionBeg{EXPERIMENTAL PLATFORM and SIMULATION STUDIES}
+\input{experimental_results}
+\TightSectionEnd
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\TightSectionBeg{CONCLUSION}
+\input{conclusion}
+\TightSectionEnd
+%
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+%\addtolength{\textheight}{-4cm}
+\end{document}

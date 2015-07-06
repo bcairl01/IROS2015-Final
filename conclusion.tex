@@ -1,0 +1,15 @@
+%%% Conclusion %%%
+
+In this paper, a neuro-compensator mechanism based on a NARX-model Neural Network was presented
+ to reject angular trunk state disturbances while executing
+periodic gait sequences. This control technique has been shown to be effective in suppressing
+platform disturbances, which suggests that this technique has extendability to control tasks which 
+require steady articulation of the robot's main body. Further studies will aim to improve the
+degree of disturbance-rejection offered by the compensator and will test its effectiveness
+during a task in which the main body (trunk) is to be articulated over some desired trajectory. We are looking into
+further improvements of the neural network compensation scheme which reduces dependency on
+knowledge of the system mass matrix. Another improvement to the scheme will involve the incorporation 
+of automatic compensator activation/deactivation using the current network prediction error. This will
+prompt the  NARX-NN to re-adapt in the event of environmental changes or larger variations in gaiting.
+We are also planning on integrating load sensors onto each foot of the BlueFoot platform so that this method 
+can be implemented on the actual system.
