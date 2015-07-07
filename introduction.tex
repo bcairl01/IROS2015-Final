@@ -4,10 +4,8 @@ Legged robotic systems have long employed motion controllers based on limit cycl
 Central Pattern Generators (CPGs)  for the purpose of generating bio-mimetic gaits 
 \cite{Matsuoka1985,Collins1993,Endo2004,Righetti2006,Ijspeert2008,Matos2010,Ajallooeian2013,Park2014,Fukuoka2015}. 
 Since these motion control methods are open-loop motion planners (\IE not inherently formulated to incorporate feedback) 
-they do not perform any active system stabilization on their own accord. As a result, implementations involving these  
-locomotion methods often require auxiliary control mechanisms which provide gait stability. Fixed point methods,
-which include considerations of the system's zero-moment point and center of gravity, are utilized in the design of
-stable oscillator driven gaits. These methods are summarized in \cite{Wieber2015}. %add ZMP references%
+they do not perform any active system stabilization on their own. As a result, implementations involving these  
+locomotion methods often require auxiliary control mechanisms which provide gait stability. Considerations of a system's zero-moment point and center of gravity are often utilized in the design of stable oscillator driven gaits. Methods which employ these values toward gait stabilization are summarized in \cite{Wieber2015}. %add ZMP references%
 
 Developments in CPG-based gait controllers have led to the incorporation of ``reflexive" feedback
 mechanisms aimed at correcting foot-placement during gaiting on uneven terrain or various surfaces. One such approach
@@ -58,7 +56,6 @@ by the compensator.
 
 The effectiveness of the proposed methodology for gait modification to achieve a stable trunk will be shown through extensive 
 simulation studies on a quadruped robot modeled after our in-house developed quadruped system (the BlueFoot Quadruped) during a 
-CPG-driven trot gait. Results will highlight the robustness of the compensator during gaits at various speeds. We also include results
-which depict the effect various mixtures between the original CPG reference and NARX-NN compensator output signals.
-Lastly, some final remarks will made about future work including an associated implementation on the BlueFoot 
-system and possible directions for enhancing the design of the controller at hand.
+CPG-driven trot gait. Results will highlight the robustness of the compensator during gaits at various speeds. We also include results which depict the effect various mixtures between the original CPG reference and NARX-NN compensator output signals.
+Lastly, some final remarks will be made about %future work including an associated implementation on the BlueFoot system and 
+possible directions for enhancing the design of the controller at hand.
