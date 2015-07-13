@@ -42,10 +42,11 @@ dynamics, $\hat{\psi}_{k+1}$. The relationship between $\hat{\Phi}_{k}$ and the 
 will be made clear in the description of the network training signal given in (\ref{eq::training_signal}). 
 The general input-output relationship of the NARX-NN predictor, $\mathscr{N}$, is described as follows:
 	\begin{equation}
+		\vspace{-1.5mm}
 		\begin{split}
-		\hat{\psi}_{k+1}&= \mathscr{N}(\hat{\Psi}_{k}^{N},{U}_{k}^{N}) \\
+		\hat{\psi}_{k+1}	&= \mathscr{N}(\hat{\Psi}_{k}^{N},{U}_{k}^{N}) \\
 		\hat{\Psi}_{k}^{N}	&= [\hat{\psi}_{k},\hat{\psi}_{k-1},...,\hat{\psi}_{k-N+1}]  \\
-		{U}_{k}^{N}		&= [u_{k}   ,u_{k-1}   ,...,u_{k-N+1}   ]
+		{U}_{k}^{N}			&= [u_{k}   ,u_{k-1}   ,...,u_{k-N+1}   ]
 		\end{split}
 		\label{eq::narx_model}
 	\end{equation}
@@ -62,20 +63,18 @@ components are the arguments of $\Phi$ at time instant $k$.
 \subsection{NARX-NN Training Regimen}
 	
 
-The  NARX-NN training signal is formulated to estimate $\Phi_{k}$ from the system dynamics.
-By (\ref{eq::sampled_dynamics}), it can be seen that $\Phi_{k}$ can be estimated if ${z}_{2,k+1}$ can be predicted. 
-We consider the following target network prediction output, $\psi_{k+1}$,  defined by:
+The  NARX-NN training signal is formulated to estimate $\Phi_{k}$ from the system dynamics. By (\ref{eq::sampled_dynamics}), it can be seen that $\Phi_{k}$ can be estimated if ${z}_{2,k+1}$ can be predicted. We consider the following target network prediction output, $\psi_{k+1}$,  defined by:
 	\vspace{-2mm}
 	\begin{equation}
+		\vspace{-1.5mm}
 		\psi_{k+1} = \tau_{k} - \hat{M}_{1,k}({z}_{2,k+1} - {z}_{2,k})\Delta_{s}^{-1} = \Phi_{k} - {e}_{2,k}^{\Delta_{s}} \text{ .}
 		\label{eq::training_signal}
 	\end{equation}
 %%
 %%
-This training signal formulation assumes that $\hat{M}_{1,k}$ represents $M_{1,k}$ exactly, which is likely not 
-the case given the system's complexity. In the absence of a well-modeled $\hat{M}_{1,k}$, a constant symmetric $\hat{M}_{nom}$ 
-will be picked such that $\hat{M}_{1,k} = \hat{M}_{nom} \forall k$. $\hat{M}_{nom}$ has the following structure:
+This training signal formulation assumes that $\hat{M}_{1,k}$ represents $M_{1,k}$ exactly, which is likely not the case given the system's complexity. In the absence of a well-modeled $\hat{M}_{1,k}$, a constant symmetric $\hat{M}_{nom}$  will be picked such that $\hat{M}_{1,k} = \hat{M}_{nom} \forall k$. $\hat{M}_{nom}$ has the following structure:
 	\begin{equation}
+		\vspace{-1.5mm}
 		\hat{M}_{nom} = \left[
 			\begin{array}{cc}
 			\hat{M}_{bb}	&	 \hat{M}_{bq}\\
@@ -86,24 +85,14 @@ will be picked such that $\hat{M}_{1,k} = \hat{M}_{nom} \forall k$. $\hat{M}_{no
 where 	$\hat{M}_{bb}\RealMat{6}{6}$, 
 		$\hat{M}_{bq}=\hat{M}_{qb}^{T} \RealMat{6}{(4m)}$, and  
 		$\hat{M}_{qq}\RealMat{(4m)}{(4m)}$. 
-It is particularly important that $\hat{M}_{bq}\neq0$ to reflect some degree of coupling between the joint states $q$ and the trunk states $p_{b}$ and $\theta_{b}$. 
-In general, if $\hat{M}_{nom}$ should be selected to reflect the \emph{average} system mass matrix over the range of configurations, 
-$z_{1}$, seen during gaiting. This approximation has shown to be adequate from our results, and depends on the assumption that changes in $\hat{M}_{1,k}$ 
-are small  over the subset of state $z_{1}$ experiences during a periodic gaiting sequence. Future improvements of this controller will
-involve the formulation of a separate estimator for $M(z_{1})$, or a control/learning scheme with no direct dependence on $M(z_{1})$.
+It is particularly important that $\hat{M}_{bq}\neq0$ to reflect some degree of coupling between the joint states $q$ and the trunk states $p_{b}$ and $\theta_{b}$. In general, if $\hat{M}_{nom}$ should be selected to reflect the \emph{average} system mass matrix over the range of configurations, $z_{1}$, seen during gaiting. This approximation has shown to be adequate from our results, and depends on the assumption that changes in $\hat{M}_{1,k}$ are small  over the subset of state $z_{1}$ experiences during a periodic gaiting sequence. Future improvements of this controller will involve the formulation of a separate estimator for $M(z_{1})$, or a control/learning scheme with no direct dependence on $M(z_{1})$.
 
-Since $\hat{\psi}_{k+1}$ is non-causal, training is performed one time-step after a prediction is made using the input-output pair $\hat{\psi}_{k}$ and
-\{${\Psi}_{k-1}^{N}$, ${U}_{k-1}^{N}$\}. Note that $\hat{\psi}_{k}$ can be calculated directly using (\ref{eq::training_signal}) where all component
-signals are time-delayed by one time-step. Training can then be described by:
+Since $\hat{\psi}_{k+1}$ is non-causal, training is performed one time-step after a prediction is made using the input-output pair $\hat{\psi}_{k}$ and \{${\Psi}_{k-1}^{N}$, ${U}_{k-1}^{N}$\}. Note that $\hat{\psi}_{k}$ can be calculated directly using (\ref{eq::training_signal}) where all component signals are time-delayed by one time-step. Training can then be described by:
 	\begin{equation}
 		\psi_{k} \xrightarrow{BP(\gamma)} \mathscr{N}({\Psi}_{k-1}^{N},{U}_{k-1}^{N})
 		\label{eq::training}
 	\end{equation}
-where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using a \emph{bold-driver} update routine. Bold-driver learning-rate 
-adaptation is a  heuristic method for speeding up the rate of convergence of back-propagation training regimes \cite{Battiti1992,Magoulas1999}. 
-This $\gamma$ update law is parameterized by $\beta \in (0,1)$ and $\zeta \in (0,1)$ which are selected to specify the amount by which 
-$\gamma$ increases or decreases per update, and $\gamma _{min}$ and $\gamma _{max}$ which are used to saturate $\gamma$.  The bold-driver 
-scheme utilizes the current and previous mean-squared network output error values ($MSE_{k}$ and $MSE_{k-1}$, respectively) to adjust $\gamma$ as follows:
+where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using a \emph{bold-driver} update routine. Bold-driver learning-rate adaptation is a  heuristic method for speeding up the rate of convergence of back-propagation training regimes \cite{Battiti1992,Magoulas1999}. This $\gamma$ update law is parameterized by $\beta \in (0,1)$ and $\zeta \in (0,1)$ which are selected to specify the amount by which $\gamma$ increases or decreases per update, and $\gamma _{min}$ and $\gamma _{max}$ which are used to saturate $\gamma$.  The bold-driver scheme utilizes the current and previous mean-squared network output error values ($MSE_{k}$ and $MSE_{k-1}$, respectively) to adjust $\gamma$ as follows:
 	\begin{equation}
 	    \gamma \leftarrow 
 		\begin{cases}
@@ -111,10 +100,7 @@ scheme utilizes the current and previous mean-squared network output error value
 	    \gamma (1+\zeta \beta),& \text{otherwise}.
 		\end{cases}
 	\end{equation}
-Since network training is being performed on-line as an incremental routine, the effective mean-squared NARX-NN  output error 
- is low-passed by a factor $\lambda \in (0,1)$. This update technique has been selected to ensure that outliers presented during 
-training do not affect network learning updates as significantly as ``nominal" training pairs. Network output error, 
-$e_{\mathscr{N},k}$, and its associated MSE values are calculated after each prediction by:
+Since network training is being performed on-line as an incremental routine, the effective mean-squared NARX-NN  output error is low-passed by a factor $\lambda \in (0,1)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Network output error, $e_{\mathscr{N},k}$, and its associated MSE values are calculated after each prediction by:
 	\begin{equation}
 		\begin{split}
 		e_{\mathscr{N},k} 	&= \hat{\psi}_{k} - \psi_{k} \\
@@ -142,13 +128,12 @@ where
 		\Gamma_{2} = [0_{(4m)\times6},I_{(4m)\times(4m)}]^{T}
 	\end{equation*}
 and $\Gamma_{2}\tau_{q}$ is equivalent to the original system input, $\tau$.
-In order to enforce a level platform with zero angular velocity, we seek a $\tau_{q}$ which emulates
-the proportional-derivative (P.D.) control law:
+In order to enforce a level platform with zero angular velocity, we seek a $\tau_{q}$ which emulates the proportional-derivative (P.D.) control law:
 	\begin{equation}
+		\vspace{-1mm}
 	 	\ddot{\theta}_{b} = - K_{p}{\theta}_{b} - K_{d}\dot{\theta}_{b}
 	\end{equation}
-where $K_{p}$ and $K_{d}$ are constant gain matrices. Using this P.D. law and (\ref{eq::sub_dynamics}), 
-we propose a least-squares solution for $\tau_{q}$ by:
+where $K_{p}$ and $K_{d}$ are constant gain matrices. Using this P.D. law and (\ref{eq::sub_dynamics}), we propose a least-squares solution for $\tau_{q}$ by:
 	\begin{equation}
 		\tau_{q} \approx  -
 		\left[\Gamma_{1} M^{-1}(z_{1}) \Gamma_{2}\right]^{\dagger}
@@ -157,68 +142,25 @@ we propose a least-squares solution for $\tau_{q}$ by:
 	\end{equation}
 where $\left[*\right]^{\dagger}$ denotes the Penrose-Moore pseudo-inverse of $[*]$.
 %%
-Replacing all dynamical terms with their associated discrete-time equivalents, and $\Phi$ by 
-the NARX-NN output $\hat{\Phi}_{k}=\hat{\psi}_{k+1}$, we apply (\ref{eq::psuedo_torque})
- to arrive at the following required joint torque estimate:
+Replacing all dynamical terms with their associated discrete-time equivalents, and $\Phi$ by the NARX-NN output $\hat{\Phi}_{k}=\hat{\psi}_{k+1}$, we apply (\ref{eq::psuedo_torque}) to arrive at the following required joint torque estimate:
+	\vspace{-1mm}
 	\begin{equation}
-		\hat{\tau}_{q,k} =  -
+		\vspace{-1mm}
+		\hat{\tau}_{q,k} = -
 		\left[\Gamma_{1} \hat{M}^{-1}_{1,k} \Gamma_{2}\right]^{\dagger} 
 		\left[\Gamma_{1}\hat{M}^{-1}_{1,k}\hat{\psi}_{k+1} + K_{p}{\theta}_{b,k} + K_{d}\dot{\theta}_{b,k} \right]
 		\label{eq::psuedo_torque_k}
 	\end{equation}
 where ${\theta}_{b,k}$ and $\dot{\theta}_{b,k}$ are samples of angular trunk position and rate, respectively.
-%The dynamical estimation term $\hat{\Phi}_{k}$ is replaced by the network output $\hat{\psi}_{k+1}$. 
-%The joint toques are estimated as:
-%	\begin{equation}
-		%\begin{split}
-		%\mathscr{N}_{k} 	&= \hat{\Psi}_{k+1} = \hat{\Phi}_{k} - {e}_{2,k}^{\Delta_{s}} \\
-%		\tau_{q,k}  =  \Gamma \left( M_{1,k}[\Delta e_{2,k+1} + K_{p} e_{1,k} + K_{d} e_{2,k}] + \hat{\psi}_{k+1}\right)
-		%e_{1,k} &= {z}_{1,k}^{r} - {z}_{1,k} \\
-		%e_{2,k} &= {z}_{2,k}^{r} - {z}_{2,k} \\
-		%\Delta e_{2,k+1}&= ({z}_{2,k+1}^{r} - {z}_{2,k})\Delta_{s}^{-1}\\
-		%\end{split}
-%		\label{eq::digital_controller_base}
-%	\end{equation}
-%\vspace{-2mm}where
-%	\begin{equation}
-%		\begin{split}
-%		e_{1,k} &= {z}_{1,k}^{r} - {q}_{1,k} \\
-%		e_{2,k} &= {z}_{2,k}^{r} - {z}_{2,k} \\
-%		\Delta e_{2,k+1}&= ({z}_{2,k+1}^{r} - {z}_{2,k})\Delta_{s}^{-1}\\
-%		\end{split}
-%		\label{eq::digital_controller_base}
-%	\end{equation}
-%with  $\Gamma = \left[ 0_{(4m)\times6}, I_{(4m)\times(4m)} \right]$; $K_{1}$ and $K_{2}$ are constant 
-%gain matrices; and  ${z}_{1}^{r}$, ${z}_{2}^{r}$ are state reference signals. The term ${z}_{2,k+1}^{r} = [0_{1\times6},(\dot{q}_{k+1}^{r})^{T}]^{T}$ is defined
-%using the future joint velocity reference, $\dot{q}_{k+1}^{r}$, generated by an \emph{a priori} stabilized gait controller, and is assumed to be known because it is
-%not dependent on the system dynamics.
-%%
-%It should also be noted that this controller output formulation neglects the position and orientation states of the trunk (along with their derivatives),
-%as these states are not actuated. Additionally, we assume that the majority of the disturbances imparted upon the trunk are due to
-%variations in applied external forces, $f_{ext,k}$, applied at each foot. The dynamical cancellation that occurs via
-%the proposed, feed-forward compensation scheme will resolve said disturbances through joint-level controls, exclusively.
 
-
-
-Using the joint controller dynamics presented in (\ref{eq::servo_control_dynamics}) and the estimate $\hat{\tau}_{q,k}$, 
-we can formulate a reference-trajectory correction  which is used to alter the joint reference positions, ${q}_{k}^{r}$. 
-Moreover, the corrected reference position, ${q}_{1,k}^{r,*}$ is generated such that the estimated output
-torque $\hat{\tau}_{q,k}$ is attained by each joint controller. This joint-reference compensator output is defined using 
-(\ref{eq::psuedo_torque_k}) as follows:
+The joint-reference compensator output, $\tilde{q}_{k}^{r}$, is formed as a weighted sum of the original gaiting trajectory signal, ${q}_{k}^{r}$, and a correction component, formed using (\ref{eq::servo_control_dynamics}) and (\ref{eq::psuedo_torque_k}), as follows:
+	\vspace{-1mm}
 	\begin{equation}
-	 	{q}_{1,k}^{r,*} 	= k_{s}^{-1}  \left(  \hat{\tau}_{q,k}  \right) +  {q}_{1,k}.
-		\label{eq::correction_equation}
-	\end{equation}
-The correction signal,  ${q}_{k}^{r,*}$, is combined with the original gaiting trajectory signal, ${q}_{k}^{r}$, as a weighted sum to form
-a compensated joint control reference signal, $\tilde{q}_{k}^{r}$, defined by:
-	\begin{equation}
-	 	\tilde{q}_{k}^{r} 	\leftarrow (1-\alpha) {q}_{k}^{r} + \alpha ( {q}_{k}^{r,*} )
+		\vspace{-1mm}
+	 	\tilde{q}_{k}^{r} 	= (1-\alpha) {q}_{k}^{r} + \alpha \left( k_{s}^{-1}  \left(  \hat{\tau}_{q,k}  \right) +  {q}_{1,k} \right)
 		\label{eq::correction_application}
 	\end{equation}
-where  $\alpha \in (0,1)$ is a uniform mixing parameter. The parameter $\alpha$ must be tuned with respect to the stability margins of the gait being compensated. 
-The resultant $\tilde{q}_{k}^{r}$ is then applied  to each joint controller in place of the original reference signal,  ${q}_{k}^{r}$,  generated by the gait controller.
-Selection of the parameter $\alpha$ is crucial for achieving good performance. Effects of $\alpha$ and its choice will be discussed in the ensuing section. 
-
+where  $\alpha \in (0,1)$ is a uniform mixing parameter. The parameter $\alpha$ must be tuned with respect to the stability margins of the gait being compensated. The resultant $\tilde{q}_{k}^{r}$ is then applied  to each joint controller in place of the original reference signal,  ${q}_{k}^{r}$, generated by the gait controller. Selection of the parameter $\alpha$ is crucial for achieving good performance. Effects of $\alpha$ and its choice will be discussed in the ensuing section. 
 	\begin{figure}[h!]
 		\centering
 		\SetImage{\ImageWidthRatio}{controller_diagram.png}
@@ -226,9 +168,3 @@ Selection of the parameter $\alpha$ is crucial for achieving good performance. E
 		\label{fig::sys_diagram}
 		\PostImageCloseSpace
 	\end{figure}
-
-% Of course, we would
-%ike to allow our correction signal to have adequate authority over the updated referential joint control signal, however network
-%outputs at the very start of learning are prone to error and could destabilize the gait being performed. The use of a weighted sum,
-%parameterized by $\alpha$, prevents this by limiting the effects of the compensator on joint reference to within the 
-%stability margins of the gait. Future work will involve an automatic adjustment of $\alpha$ with respect to network output error.

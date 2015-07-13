@@ -1,9 +1,8 @@
 %%% System Dynamics
 
-We first consider a general, free-floating, four legged robotic 
-system with $m$ degrees of freedom per leg. This system is fully described by the state vector 
-$\eta \RealVec{(6+4m)}$ and its dynamics are:
+We first consider a general, free-floating, four legged robotic system with $m$ degrees of freedom per leg. This system is fully described by the state vector $\eta \RealVec{(6+4m)}$ and its dynamics are:
 	\begin{equation}
+		\vspace{-1.0mm}
 		M(\eta)\ddot{\eta} + C(\eta,\dot{\eta})\dot{\eta} + G(\eta) + \Delta{H} = \tau + J^T(\eta) f_{ext} %
 		\label{eq::normal_form_dynamics}
 	\end{equation}
@@ -29,6 +28,7 @@ $\theta_{b}$, are not directly actuated, and must be controlled via composite le
 %
 The dynamics in (\ref{eq::normal_form_dynamics}) can be realized in compact, state-space form by:
 	\begin{equation}
+		\vspace{-1.0mm}
 		\begin{split}
 		\dot{z}_{1} 				&= z_{2} \\
 		\dot{z}_{2} 				&= M^{-1}(z_{1})(\tau + \Phi(z_{1},z_{2},f_{ext})) \\
@@ -43,14 +43,14 @@ follow.
 The system dynamics are considered in an approximate, discrete-time form for use in NARX-NN network 
 training, as follows:
 	\begin{equation}
+		\vspace{-1.0mm}
 		\begin{split}
 		{z}_{1,k+1} &= {z}_{1,k} + ( {e}_{1,k}^{\Delta_{s}} + {z}_{2,k} )\Delta_{s} \\
 		{z}_{2,k+1} &= {z}_{2,k} + M^{-1}_{1,k}( {e}_{2,k}^{\Delta_{s}} + \tau_{k} + \Phi_{k}) \Delta_{s} \\
-		t 			&= \Delta_{s} k
 		\end{split}
 		\label{eq::sampled_dynamics}
 	\end{equation}
-where $M_{1,k} = M(z_{1,k})$ and $\Delta_{s} \equiv (f_{s})^{-1}$ with $f_{s}$ defining a uniform 
+where $M_{1,k} = M(z_{1,k})$, $t = \Delta_{s} k$, and $\Delta_{s} \equiv (f_{s})^{-1}$ with $f_{s}$ defining a uniform 
 sampling frequency in Hz. The terms ${e}_{1,k}^{\Delta_{s}}$ and ${e}_{2,k}^{\Delta_{s}}$ are used to explicitly 
 account for system discretization errors, which vary with respect to the step-size, $\Delta_{s}$. These
 discretization errors and system uncertainties will be compensated for by the NARX-NN learning mechanism.
@@ -67,6 +67,7 @@ we will utilize a simple model of the motor dynamics at each joint to produce th
 torques by an equivalent joint trajectory to be provided to the motor. We consider the motors as simple
 torque generators of the following form:
 	\begin{equation}
+		\vspace{-1mm}
 		\tau_{q} = k_{s}(q^{r}-q)
 		\label{eq::servo_control_dynamics}
 	\end{equation}
