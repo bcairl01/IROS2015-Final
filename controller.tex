@@ -2,7 +2,7 @@
 
 A NARX-NN architecture is used in this controller because of  its known effectiveness in approximating nonlinear difference systems and 
 making multivariate time-series predictions \cite{Tsungnan1996,ChenBillings1990,Hihi1996,Billings2013}. 
-Moreover, the NARX-NNs is a natural fit for a problem of this nature where the dynamics being considered are both periodic and of a 
+Moreover, the NARX-NN is a natural fit for a problem of this nature where the dynamics being considered are both periodic and of a 
 high enough complexity where a nonlinear approximation method is warranted.
 The parallel NARX-NN model, shown in Figure \ref{fig::narx_net}, is comprised of a feed-forward neural network whose input
 layer accepts a series of time-delayed system state values and network-output histories. The NARX-NN is trained to predict 
@@ -12,35 +12,19 @@ using standard BP because recurrence occurs between network inputs and outputs, 
 
 The NARX-NN is trained to capture the effects of forces and moments and dynamical couplings that act on the trunk
 so that an appropriate torque input to the joints is computed to reduce such effects on trunk orientation while performing
-the gate. This is achieved by considering the inverse dynamics corresponding to joint motion.
-%Using the previously introduced notations, an inverse dynamics controller for a general robotic 
-%system takes the following form:
-%	\begin{equation}
-%		\tau = \hat{M}(z_{1})[\dot{z}_{2}^{r} + K_{1}(z_{1}^{r}-z_{1}) + K_{2}(z_{2}^{r}-z_{2})] + \hat{\Phi}
-%		\label{eq::inverse_dynamics}
-%	\end{equation}
-%where $\hat{M}(z_{1})$ and $\hat{\Phi}$ are estimates of $M(z_{1})$ and $\Phi$, respectively; $K_{1}$ and $K_{2}$ are constant 
-%gain matrices, and ${z}_{1}^{r}$, ${z}_{2}^{r}$, and $\dot{z}_{2}^{r}$ are reference position, velocity and acceleration terms. 
-
-Disturbances imparted upon the trunk during gaiting manifest in the term $\Phi$, largely as a result of variations in $f_{ext}$ and associated effects due to dynamical coupling. 
-Because of this, the NARX-NN will learn an estimate for $\Phi$, denoted $\hat{\Phi}$. The network is trained on-line using the standard incremental back-propagation 
-(BP) algorithm with an adapted learning rate, $\gamma$ \cite{Rumelhart1988,Rumelhart1995}.
+the gate. This is achieved by considering the inverse dynamics corresponding to joint motion. Disturbances imparted upon the trunk during gaiting manifest in the term $\Phi$, largely as a result of variations in $f_{ext}$ and associated effects due to dynamical coupling. Because of this, the NARX-NN will learn an estimate for $\Phi$, denoted $\hat{\Phi}$. The network is trained on-line using the standard incremental back-propagation (BP) algorithm with an adapted learning rate, $\gamma$ \cite{Rumelhart1988,Rumelhart1995}.
 
 The success of this learning mechanism, as it applies to the presented controller, is predicated on the periodicity of the 
-system dynamics during gaiting. Like any BP-trained neural network, repetition of similar input and output sets is paramount for successful 
-network training and, by extension, prediction accuracy. It is assumed that this specification can be met given the 
+system dynamics during gaiting. Like any BP-trained neural network, repetition of similar input and output sets is paramount for successful network training and, by extension, prediction accuracy. It is assumed that this specification can be met given the 
 inherently cyclic nature of the dynamics being estimated during gaited locomotion. 
 	\begin{figure}[t!]
 		\centering
 		\SetImage{\ImageWidthRatio}{narx_network_diagram.png}
-		\caption{Parallel NARX-network model with a linear output layer.}
+		\caption{Parallel NARX-NN model with a linear output layer.}
 		\label{fig::narx_net}
-		\vspace{-10mm}
+		\vspace{-7mm}
 	\end{figure}
-Using the NARX-NN, the dynamical estimate $\hat{\Phi}_{k}$ is generated as a prediction of the sampled system 
-dynamics, $\hat{\psi}_{k+1}$. The relationship between $\hat{\Phi}_{k}$ and the network prediction $\hat{\psi}_{k+1}$ 
-will be made clear in the description of the network training signal given in (\ref{eq::training_signal}). 
-The general input-output relationship of the NARX-NN predictor, $\mathscr{N}$, is described as follows:
+Using the NARX-NN, the dynamical estimate $\hat{\Phi}_{k}$ is generated as a prediction of the sampled system dynamics, $\hat{\psi}_{k+1}$. The relationship between $\hat{\Phi}_{k}$ and the network prediction $\hat{\psi}_{k+1}$ will be made clear in the description of the network training signal given in (\ref{eq::training_signal}). The general input-output relationship of the NARX-NN predictor, $\mathscr{N}$, is described as follows:
 	\begin{equation}
 		\vspace{-1.5mm}
 		\begin{split}
@@ -50,9 +34,7 @@ The general input-output relationship of the NARX-NN predictor, $\mathscr{N}$, i
 		\end{split}
 		\label{eq::narx_model}
 	\end{equation}
-where ${U}_{k}^{N}$  and $\hat{\Psi}_{k}^{N}$ are collections of $N$ most recent samples of the network inputs, $u_{k}$, and 
-the network output, $\hat{\psi}_{k}$, respectively. The NARX-NN input, $u_{k}$, represents a tuple $u_{k} = (z_{1,k}, z_{2,k}, f_{ext,k})$ whose 
-components are the arguments of $\Phi$ at time instant $k$. 
+where ${U}_{k}^{N}$  and $\hat{\Psi}_{k}^{N}$ are collections of $N$ most recent samples of the network inputs, $u_{k}$, and the network output, $\hat{\psi}_{k}$, respectively. The NARX-NN input, $u_{k}$, represents a tuple $u_{k} = (z_{1,k}, z_{2,k}, f_{ext,k})$ whose components are the arguments of $\Phi$ at time instant $k$. 
 
 %, as these changes in force distribution are a major contributor to platform disturbance.
 %Hence, we are neglecting the torque components of each wrench.
@@ -86,14 +68,23 @@ where 	$\hat{M}_{bb}\RealMat{6}{6}$,
 		$\hat{M}_{bq}=\hat{M}_{qb}^{T} \RealMat{6}{(4m)}$, and  
 		$\hat{M}_{qq}\RealMat{(4m)}{(4m)}$. 
 It is particularly important that $\hat{M}_{bq}\neq0$ to reflect some degree of coupling between the joint states $q$ and the trunk states $p_{b}$ and $\theta_{b}$. In general, if $\hat{M}_{nom}$ should be selected to reflect the \emph{average} system mass matrix over the range of configurations, $z_{1}$, seen during gaiting. This approximation has shown to be adequate from our results, and depends on the assumption that changes in $\hat{M}_{1,k}$ are small  over the subset of state $z_{1}$ experiences during a periodic gaiting sequence. Future improvements of this controller will involve the formulation of a separate estimator for $M(z_{1})$, or a control/learning scheme with no direct dependence on $M(z_{1})$.
+	\begin{figure}[t!]
+		\centering
+		\SetImage{\ImageWidthRatio}{controller_diagram.png}
+		\caption{Full system diagram with NARX-NN compensator.}
+		\label{fig::sys_diagram}
+		\vspace{-7mm}
+	\end{figure}
 
 Since $\hat{\psi}_{k+1}$ is non-causal, training is performed one time-step after a prediction is made using the input-output pair $\hat{\psi}_{k}$ and \{${\Psi}_{k-1}^{N}$, ${U}_{k-1}^{N}$\}. Note that $\hat{\psi}_{k}$ can be calculated directly using (\ref{eq::training_signal}) where all component signals are time-delayed by one time-step. Training can then be described by:
 	\begin{equation}
+		\vspace{-1mm}
 		\psi_{k} \xrightarrow{BP(\gamma)} \mathscr{N}({\Psi}_{k-1}^{N},{U}_{k-1}^{N})
 		\label{eq::training}
 	\end{equation}
 where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using a \emph{bold-driver} update routine. Bold-driver learning-rate adaptation is a  heuristic method for speeding up the rate of convergence of back-propagation training regimes \cite{Battiti1992,Magoulas1999}. This $\gamma$ update law is parameterized by $\beta \in (0,1)$ and $\zeta \in (0,1)$ which are selected to specify the amount by which $\gamma$ increases or decreases per update, and $\gamma _{min}$ and $\gamma _{max}$ which are used to saturate $\gamma$.  The bold-driver scheme utilizes the current and previous mean-squared network output error values ($MSE_{k}$ and $MSE_{k-1}$, respectively) to adjust $\gamma$ as follows:
 	\begin{equation}
+		\vspace{-1mm}
 	    \gamma \leftarrow 
 		\begin{cases}
 	    \gamma (1- \beta) 		& \text{if } MSE_{k} > MSE_{k-1}\\
@@ -102,6 +93,7 @@ where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using 
 	\end{equation}
 Since network training is being performed on-line as an incremental routine, the effective mean-squared NARX-NN  output error is low-passed by a factor $\lambda \in (0,1)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Network output error, $e_{\mathscr{N},k}$, and its associated MSE values are calculated after each prediction by:
 	\begin{equation}
+		\vspace{-1mm}
 		\begin{split}
 		e_{\mathscr{N},k} 	&= \hat{\psi}_{k} - \psi_{k} \\
 		MSE_{k} 			&\leftarrow \lambda \|e_{\mathscr{N},k}\|_{2}^{2} + MSE_{k-1}(1-\lambda).
@@ -111,11 +103,11 @@ Since network training is being performed on-line as an incremental routine, the
 
 \subsection{Compensator Output}
 
-
 The control scheme is first presented with respect to the servo input torques, $\tau_{q,k}$, %. 
 and formulated to achieve a level trunk characterized by $\theta_{b}=0$, $\dot{\theta}_{b}= 0$. To formulate this controller, 
 we first isolate the dynamical sub-system which corresponds to the un-actuated trunk orientation states by:
 	\begin{equation}
+		\vspace{-3.5mm}
 		\begin{split}
 		\ddot{\theta}_{b} 	= \Gamma_{1} M^{-1}(z_{1})( \Gamma_{2}\tau_{q}	 + \Phi) \\
 		\end{split}	
@@ -161,10 +153,3 @@ The joint-reference compensator output, $\tilde{q}_{k}^{r}$, is formed as a weig
 		\label{eq::correction_application}
 	\end{equation}
 where  $\alpha \in (0,1)$ is a uniform mixing parameter. The parameter $\alpha$ must be tuned with respect to the stability margins of the gait being compensated. The resultant $\tilde{q}_{k}^{r}$ is then applied  to each joint controller in place of the original reference signal,  ${q}_{k}^{r}$, generated by the gait controller. Selection of the parameter $\alpha$ is crucial for achieving good performance. Effects of $\alpha$ and its choice will be discussed in the ensuing section. 
-	\begin{figure}[h!]
-		\centering
-		\SetImage{\ImageWidthRatio}{controller_diagram.png}
-		\caption{Full system diagram with NARX-NN compensator mechanism.}
-		\label{fig::sys_diagram}
-		\PostImageCloseSpace
-	\end{figure}

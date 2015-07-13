@@ -1,15 +1,16 @@
 \relax 
 \citation{Matsuoka1985,Collins1993,Endo2004,Righetti2006,Ijspeert2008,Matos2010,Ajallooeian2013,Park2014,Fukuoka2015}
 \citation{Wieber2015}
-\citation{Fukuoka2003}
 \citation{Endo2004}
+\citation{Fukuoka2003}
 \@writefile{toc}{\contentsline {section}{\numberline {I}INTRODUCTION}{1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  \textbf  {a)} Quadruped tipping about planted feet; \textbf  {b)} Trot-gait sequence being executed by robot in \textbf  {(a)}.\relax }}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Quadruped tipping about planted feet.\relax }}{1}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig::quadruped_walking}{{1}{1}}
 \citation{Wieber2006}
 \citation{Tsungnan1996,ChenBillings1990,Hihi1996,Billings2013}
 \citation{Nelles2001}
+\citation{Rumelhart1988,Rumelhart1995}
 \@writefile{toc}{\contentsline {section}{\numberline {II}QUADRUPED DYNAMICS}{2}}
 \newlabel{eq::normal_form_dynamics}{{1}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {II-A}Dynamics in State-Space Form and an Approximate Discrete-Time Realization}{2}}
@@ -18,13 +19,14 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {II-B}Joint-Controller Dynamics}{2}}
 \newlabel{eq::servo_control_dynamics}{{4}{2}}
 \@writefile{toc}{\contentsline {section}{\numberline {III}NARX-NETWORK COMPENSATOR}{2}}
-\citation{Rumelhart1988,Rumelhart1995}
 \citation{Battiti1992,Magoulas1999}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Parallel NARX-network model with a linear output layer.\relax }}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Parallel NARX-NN model with a linear output layer.\relax }}{3}}
 \newlabel{fig::narx_net}{{2}{3}}
 \newlabel{eq::narx_model}{{5}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {III-A}NARX-NN Training Regimen}{3}}
 \newlabel{eq::training_signal}{{6}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Full system diagram with NARX-NN compensator.\relax }}{3}}
+\newlabel{fig::sys_diagram}{{3}{3}}
 \newlabel{eq::training}{{8}{3}}
 \citation{OpenDynamicsEngine}
 \@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Compensator Output}{4}}
@@ -34,20 +36,14 @@
 \newlabel{eq::correction_application}{{15}{4}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}EXPERIMENTAL PLATFORM and SIMULATION STUDIES}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Experimental Platform}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Full system diagram with NARX-NN compensator mechanism.\relax }}{4}}
-\newlabel{fig::sys_diagram}{{3}{4}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  The BlueFoot Quadruped.\relax }}{4}}
 \newlabel{fig::bluefoot}{{4}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Simulated Platform}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  The BlueFoot Quadruped simulator during gaiting. \relax }}{4}}
+\newlabel{fig::bluefoot}{{5}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}Simulation Studies}{5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  The BlueFoot Quadruped simulator during gaiting. \relax }}{5}}
-\newlabel{fig::bluefoot}{{5}{5}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  \textbf  {a)} Trunk orientation during 80 $\frac  {mm}{s}$ gait with mixing parameter set to $\alpha = 0.35$; \textbf  {b)} Trunk orientation during 100 $\frac  {mm}{s}$ gait with mixing parameter set to $\alpha = 0.35$; \textbf  {c)} NARX Network MSE convergence for trial shown in \textbf  {(b)}. \relax }}{5}}
 \newlabel{fig::fast}{{6}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {IV-D}Video Submission}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}CONCLUSION}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  Trunk orientation during 60 $\frac  {mm}{s}$ gait with mixing parameter set to \textbf  {a)} $\alpha = 0.125$ \textbf  {b)} $\alpha = 0.250$ \textbf  {c)} $\alpha = 0.350$. Dark-shaded regions depict when the compensator is not active. \relax }}{6}}
-\newlabel{fig::alpha_tests}{{7}{6}}
 \bibstyle{unsrt}
 \bibdata{refs}
 \bibcite{Matsuoka1985}{1}
@@ -55,6 +51,11 @@
 \bibcite{Endo2004}{3}
 \bibcite{Righetti2006}{4}
 \bibcite{Ijspeert2008}{5}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-D}Video Submission}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}CONCLUSION}{6}}
+\@writefile{toc}{\contentsline {section}{References}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  Trunk orientation during 60 $\frac  {mm}{s}$ gait with mixing parameter set to \textbf  {a)} $\alpha = 0.125$ \textbf  {b)} $\alpha = 0.250$ \textbf  {c)} $\alpha = 0.350$. Dark-shaded regions depict when the compensator is not active. \relax }}{6}}
+\newlabel{fig::alpha_tests}{{7}{6}}
 \bibcite{Matos2010}{6}
 \bibcite{Ajallooeian2013}{7}
 \bibcite{Park2014}{8}
@@ -72,4 +73,3 @@
 \bibcite{Battiti1992}{20}
 \bibcite{Magoulas1999}{21}
 \bibcite{OpenDynamicsEngine}{22}
-\@writefile{toc}{\contentsline {section}{References}{7}}
