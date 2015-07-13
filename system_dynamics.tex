@@ -6,21 +6,7 @@ We first consider a general, free-floating, four legged robotic system with $m$ 
 		M(\eta)\ddot{\eta} + C(\eta,\dot{\eta})\dot{\eta} + G(\eta) + \Delta{H} = \tau + J^T(\eta) f_{ext} %
 		\label{eq::normal_form_dynamics}
 	\end{equation}
-where $M(\eta)$, $C(\eta,\dot{\eta}$), $G(\eta)$ and $J(\eta)$ represent the system mass matrix, 
-Coriolis matrix, gravity matrix and Jacobian, respectively \cite{Wieber2006}. $\Delta{H}$ 
-has been included as a lump term to account for dynamical uncertainties, such as friction or 
-unmodeled coupling effects. Additionally, $f_{ext} = [ f_{1,ext}^{T},f_{2,ext}^{T},f_{3,ext}^{T},f_{4,ext}^{T}]^{T} \RealVec{24}$ 
-represents a stacked vector of force-wrenches, $f_{i,ext} \RealVec{6}$, applied to the system through each \Ith foot.
-The state vector, $\eta$, can be partitioned as follows: 
-$\eta = [ p_{b}^{T}, \theta_{b}^{T}, q^{T} ]^{T}$ with $p_{b} \RealVec{3}$ and $\theta_{b} \RealVec{3}$ 
-representing the position and orientation, respectively, of the quadruped's trunk in an arbitrarily placed 
-world coordinate frame, and $q \RealVec{4 m}$ is a vector of joint variables, $m$ of which are contributed by 
-each leg.
-%NOP
-$\tau \RealVec{(6+4m)}$ represents a vector of generalized torque inputs and takes the form 
-$\tau = [ 0_{1x6}, \tau_{q}^{T} ]^{T}$ where $\tau_{q}$ represents a set of torque inputs to each joint. 
-It is important to note that the states we are most interested in controlling, $p_{b}$ and 
-$\theta_{b}$, are not directly actuated, and must be controlled via composite leg joint motions.
+where $M(\eta)$, $C(\eta,\dot{\eta}$), $G(\eta)$ and $J(\eta)$ represent the system mass matrix, Coriolis matrix, gravity matrix and Jacobian, respectively \cite{Wieber2006}. $\Delta{H}$ has been included as a lump term to account for dynamical uncertainties, such as friction or unmodeled coupling effects. Additionally, $f_{ext} = [ f_{1,ext}^{T},f_{2,ext}^{T},f_{3,ext}^{T},f_{4,ext}^{T}]^{T} \RealVec{24}$ represents a stacked vector of force-wrenches, $f_{i,ext} \RealVec{6}$, applied to the system through each \Ith foot. The state vector, $\eta$, can be partitioned as follows: $\eta = [ p_{b}^{T}, \theta_{b}^{T}, q^{T} ]^{T}$ with $p_{b} \RealVec{3}$ and $\theta_{b} \RealVec{3}$ representing the position and orientation, respectively, of the quadruped's trunk in an arbitrarily placed world coordinate frame, and $q \RealVec{4 m}$ is a vector of joint variables, $m$ of which are contributed by each leg. $\tau \RealVec{(6+4m)}$ represents a vector of generalized torque inputs and takes the form $\tau = [ 0_{1x6}, \tau_{q}^{T} ]^{T}$ where $\tau_{q}$ represents a set of torque inputs to each joint. It is important to note that the states we are most interested in controlling, $p_{b}$ and $\theta_{b}$, are not directly actuated, and must be controlled via composite leg joint motions.
 
 
 \subsection{Dynamics in State-Space Form and an Approximate Discrete-Time Realization}
@@ -36,12 +22,9 @@ The dynamics in (\ref{eq::normal_form_dynamics}) can be realized in compact, sta
 		\end{split}
 		\label{eq::state_space_dynamics}
 	\end{equation}
-where $z_{1}=\eta$ and $z_{2}=\dot{\eta}$. The notation $\Phi(z_{1},z_{2},f_{ext})$ is introduced
-for convenience as a composite dynamical term. This term will be referred to, simply, as $\Phi$ in the sections that 
-follow.
+where $z_{1}=\eta$ and $z_{2}=\dot{\eta}$. The notation $\Phi(z_{1},z_{2},f_{ext})$ is introduced for convenience as a composite dynamical term. This term will be referred to, simply, as $\Phi$ in the sections that follow.
 
-The system dynamics are considered in an approximate, discrete-time form for use in NARX-NN network 
-training, as follows:
+The system dynamics are considered in an approximate, discrete-time form for use in NARX-NN network training, as follows:
 	\begin{equation}
 		\vspace{-1.0mm}
 		\begin{split}
@@ -50,27 +33,16 @@ training, as follows:
 		\end{split}
 		\label{eq::sampled_dynamics}
 	\end{equation}
-where $M_{1,k} = M(z_{1,k})$, $t = \Delta_{s} k$, and $\Delta_{s} \equiv (f_{s})^{-1}$ with $f_{s}$ defining a uniform 
-sampling frequency in Hz. The terms ${e}_{1,k}^{\Delta_{s}}$ and ${e}_{2,k}^{\Delta_{s}}$ are used to explicitly 
-account for system discretization errors, which vary with respect to the step-size, $\Delta_{s}$. These
-discretization errors and system uncertainties will be compensated for by the NARX-NN learning mechanism.
+where $M_{1,k} = M(z_{1,k})$, $t = \Delta_{s} k$, and $\Delta_{s} \equiv (f_{s})^{-1}$ with $f_{s}$ defining a uniform sampling frequency in Hz. The terms ${e}_{1,k}^{\Delta_{s}}$ and ${e}_{2,k}^{\Delta_{s}}$ are used to explicitly account for system discretization errors, which vary with respect to the step-size, $\Delta_{s}$. These discretization errors and system uncertainties will be compensated for by the NARX-NN learning mechanism.
 
 
 \subsection{Joint-Controller Dynamics}
 %
 %
-The motor dynamics driving each joint need to be considered since, in our case, the input to the
-servo motors at each joint is a reference position command. In our compensation technique to follow,
-the combination of a neural network and inverse dynamics controller is used to produce an output
-torque which needs to be mixed  with the joint trajectories provided by the CPG. In this paper,
-we will utilize a simple model of the motor dynamics at each joint to produce the required compensation
-torques by an equivalent joint trajectory to be provided to the motor. We consider the motors as simple
-torque generators of the following form:
+The motor dynamics driving each joint need to be considered since, in our case, the input to the servo motors at each joint is a reference position command. In our compensation technique to follow, the combination of a neural network and inverse dynamics controller is used to produce an output torque which needs to be mixed  with the joint trajectories provided by the CPG. In this paper, we will utilize a simple model of the motor dynamics at each joint to produce the required compensation torques by an equivalent joint trajectory to be provided to the motor. We consider the motors as simple torque generators of the following form:
 	\begin{equation}
 		\vspace{-1mm}
 		\tau_{q} = k_{s}(q^{r}-q)
 		\label{eq::servo_control_dynamics}
 	\end{equation}
-where $k_{s}>0$ is a constant, scalar gain and $q^{r}$ is a joint position reference. The servos we are utilizing to drive the leg joints of
-the BlueFoot quadruped have high-gain position feedback which allows us to model the motors as a static block which transform reference trajectories to torque outputs. All of these servos are identical, and thus have identical gains. One could instead consider the full motor dynamics for computing reference positions given a desired torque. The simple model stated above was
-adequate for achieving the desired results.
+where $k_{s}>0$ is a constant, scalar gain and $q^{r}$ is a joint position reference. The servos we are utilizing to drive the leg joints of the BlueFoot quadruped have high-gain position feedback which allows us to model the motors as a static block which transform reference trajectories to torque outputs. All of these servos are identical, and thus have identical gains. One could instead consider the full motor dynamics for computing reference positions given a desired torque. The simple model stated above was adequate for achieving the desired results.

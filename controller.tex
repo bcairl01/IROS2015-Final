@@ -82,7 +82,7 @@ Since $\hat{\psi}_{k+1}$ is non-causal, training is performed one time-step afte
 		\psi_{k} \xrightarrow{BP(\gamma)} \mathscr{N}({\Psi}_{k-1}^{N},{U}_{k-1}^{N})
 		\label{eq::training}
 	\end{equation}
-where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using a \emph{bold-driver} update routine. Bold-driver learning-rate adaptation is a  heuristic method for speeding up the rate of convergence of back-propagation training regimes \cite{Battiti1992,Magoulas1999}. This $\gamma$ update law is parameterized by $\beta \in (0,1)$ and $\zeta \in (0,1)$ which are selected to specify the amount by which $\gamma$ increases or decreases per update, and $\gamma _{min}$ and $\gamma _{max}$ which are used to saturate $\gamma$.  The bold-driver scheme utilizes the current and previous mean-squared network output error values ($MSE_{k}$ and $MSE_{k-1}$, respectively) to adjust $\gamma$ as follows:
+where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using a \emph{bold-driver} update routine-- a heuristic method for speeding up the rate of convergence of back-propagation training regimes \cite{Battiti1992,Magoulas1999}. This $\gamma$-update law is parameterized by $\beta \in (0,1)$ and $\zeta \in (0,1)$ which are selected to specify the amount by which $\gamma$ increases or decreases per update, and $\gamma _{min}$ and $\gamma _{max}$ which are used as saturatation parameters. This scheme utilizes the current and previous mean-squared network output error values ($MSE_{k}$ and $MSE_{k-1}$, respectively) to adjust $\gamma$ as follows:
 	\begin{equation}
 		\vspace{-1mm}
 	    \gamma \leftarrow 
@@ -91,21 +91,16 @@ where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using 
 	    \gamma (1+\zeta \beta),& \text{otherwise}.
 		\end{cases}
 	\end{equation}
-Since network training is being performed on-line as an incremental routine, the effective mean-squared NARX-NN  output error is low-passed by a factor $\lambda \in (0,1)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Network output error, $e_{\mathscr{N},k}$, and its associated MSE values are calculated after each prediction by:
+Since network training is being performed as an on-line routine, the effective mean-squared NARX-NN  output error is low-passed by a factor $\lambda \in (0,1)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Each \kth Network MSE value is calculated after each prediction by:
 	\begin{equation}
 		\vspace{-1mm}
-		\begin{split}
-		e_{\mathscr{N},k} 	&= \hat{\psi}_{k} - \psi_{k} \\
-		MSE_{k} 			&\leftarrow \lambda \|e_{\mathscr{N},k}\|_{2}^{2} + MSE_{k-1}(1-\lambda).
-		\end{split}
+		MSE_{k} = \lambda \|\hat{\psi}_{k} - \psi_{k}\|_{2}^{2} + MSE_{k-1}(1-\lambda).
 	\end{equation}
 
 
 \subsection{Compensator Output}
 
-The control scheme is first presented with respect to the servo input torques, $\tau_{q,k}$, %. 
-and formulated to achieve a level trunk characterized by $\theta_{b}=0$, $\dot{\theta}_{b}= 0$. To formulate this controller, 
-we first isolate the dynamical sub-system which corresponds to the un-actuated trunk orientation states by:
+The control scheme is first presented with respect to the servo input torques, $\tau_{q,k}$, and formulated to achieve a level trunk characterized by $\theta_{b}=0$, $\dot{\theta}_{b}= 0$. To formulate this controller, we first isolate the dynamical sub-system which corresponds to the un-actuated trunk orientation states by:
 	\begin{equation}
 		\vspace{-3.5mm}
 		\begin{split}
@@ -119,8 +114,7 @@ where
 		\hspace{2mm},\hspace{2mm} 
 		\Gamma_{2} = [0_{(4m)\times6},I_{(4m)\times(4m)}]^{T}
 	\end{equation*}
-and $\Gamma_{2}\tau_{q}$ is equivalent to the original system input, $\tau$.
-In order to enforce a level platform with zero angular velocity, we seek a $\tau_{q}$ which emulates the proportional-derivative (P.D.) control law:
+and $\Gamma_{2}\tau_{q}$ is equivalent to the original system input, $\tau$. In order to enforce a level platform with zero angular velocity, we seek a $\tau_{q}$ which emulates the proportional-derivative (P.D.) control law:
 	\begin{equation}
 		\vspace{-1mm}
 	 	\ddot{\theta}_{b} = - K_{p}{\theta}_{b} - K_{d}\dot{\theta}_{b}
