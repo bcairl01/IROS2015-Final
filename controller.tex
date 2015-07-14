@@ -1,22 +1,10 @@
 %%% MPC Controller %%%
 
-A NARX-NN architecture is used in this controller because of  its known effectiveness in approximating nonlinear difference systems and 
-making multivariate time-series predictions \cite{Tsungnan1996,ChenBillings1990,Hihi1996,Billings2013}. 
-Moreover, the NARX-NN is a natural fit for a problem of this nature where the dynamics being considered are both periodic and of a 
-high enough complexity where a nonlinear approximation method is warranted.
-The parallel NARX-NN model, shown in Figure \ref{fig::narx_net}, is comprised of a feed-forward neural network whose input
-layer accepts a series of time-delayed system state values and network-output histories. The NARX-NN is trained to predict 
-system states in the next time-instant from these inputs. Conveniently, NARX-NN training can be performed 
-using standard BP because recurrence occurs between network inputs and outputs, and not within the hidden layers 
-\cite{Nelles2001}.
+A NARX-NN architecture is used in this controller because of  its known effectiveness in approximating nonlinear difference systems and making multivariate time-series predictions \cite{Tsungnan1996,ChenBillings1990,Hihi1996,Billings2013}. Moreover, the NARX-NN is a natural fit for a problem of this nature where the dynamics being considered are both periodic and of a high enough complexity where a nonlinear approximation method is warranted.The parallel NARX-NN model, shown in Figure \ref{fig::narx_net}, is comprised of a feed-forward neural network whose input layer accepts a series of time-delayed system state values and network-output histories. The NARX-NN is trained to predict system states in the next time-instant from these inputs. Conveniently, NARX-NN training can be performed using standard BP because recurrence occurs between network inputs and outputs, and not within the hidden layers \cite{Nelles2001}.
 
-The NARX-NN is trained to capture the effects of forces and moments and dynamical couplings that act on the trunk
-so that an appropriate torque input to the joints is computed to reduce such effects on trunk orientation while performing
-the gate. This is achieved by considering the inverse dynamics corresponding to joint motion. Disturbances imparted upon the trunk during gaiting manifest in the term $\Phi$, largely as a result of variations in $f_{ext}$ and associated effects due to dynamical coupling. Because of this, the NARX-NN will learn an estimate for $\Phi$, denoted $\hat{\Phi}$. The network is trained on-line using the standard incremental back-propagation (BP) algorithm with an adapted learning rate, $\gamma$ \cite{Rumelhart1988,Rumelhart1995}.
+The NARX-NN is trained to capture the effects of forces and moments and dynamical couplings that act on the trunk so that an appropriate torque input to the joints is computed to reduce such effects on trunk orientation while performing the gate. This is achieved by considering the inverse dynamics corresponding to joint motion. Disturbances imparted upon the trunk during gaiting manifest in the term $\Phi$, largely as a result of variations in $f_{ext}$ and associated effects due to dynamical coupling. Because of this, the NARX-NN will learn an estimate for $\Phi$, denoted $\hat{\Phi}$. The network is trained on-line using the standard incremental back-propagation (BP) algorithm with an adapted learning rate, $\gamma$ \cite{Rumelhart1988,Rumelhart1995}.
 
-The success of this learning mechanism, as it applies to the presented controller, is predicated on the periodicity of the 
-system dynamics during gaiting. Like any BP-trained neural network, repetition of similar input and output sets is paramount for successful network training and, by extension, prediction accuracy. It is assumed that this specification can be met given the 
-inherently cyclic nature of the dynamics being estimated during gaited locomotion. 
+The success of this learning mechanism, as it applies to the presented controller, is predicated on the periodicity of the system dynamics during gaiting. Like any BP-trained neural network, repetition of similar input and output sets is paramount for successful network training and, by extension, prediction accuracy. It is assumed that this specification can be met given the inherently cyclic nature of the dynamics being estimated during gaited locomotion. 
 	\begin{figure}[t!]
 		\centering
 		\SetImage{\ImageWidthRatio}{narx_network_diagram.png}
@@ -82,7 +70,7 @@ Since $\hat{\psi}_{k+1}$ is non-causal, training is performed one time-step afte
 		\psi_{k} \xrightarrow{BP(\gamma)} \mathscr{N}({\Psi}_{k-1}^{N},{U}_{k-1}^{N})
 		\label{eq::training}
 	\end{equation}
-where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using a \emph{bold-driver} update routine-- a heuristic method for speeding up the rate of convergence of back-propagation training regimes \cite{Battiti1992,Magoulas1999}. This $\gamma$-update law is parameterized by $\beta \in (0,1)$ and $\zeta \in (0,1)$ which are selected to specify the amount by which $\gamma$ increases or decreases per update, and $\gamma _{min}$ and $\gamma _{max}$ which are used as saturatation parameters. This scheme utilizes the current and previous mean-squared network output error values ($MSE_{k}$ and $MSE_{k-1}$, respectively) to adjust $\gamma$ as follows:
+where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using a \emph{bold-driver} update routine--- a heuristic method for speeding up the convergence of BP-trained networks \cite{Battiti1992,Magoulas1999}. This $\gamma$-update law is parameterized by $\beta \in (0,1)$ and $\zeta \in (0,1)$ which are selected to specify the amount by which $\gamma$ increases or decreases per update, and $\gamma _{min}$ and $\gamma _{max}$ which are saturatation parameters. This scheme utilizes the current and previous mean-squared network output error values ($MSE_{k}$ and $MSE_{k-1}$, respectively) to adjust $\gamma$ as follows:
 	\begin{equation}
 		\vspace{-1mm}
 	    \gamma \leftarrow 
@@ -91,7 +79,7 @@ where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using 
 	    \gamma (1+\zeta \beta),& \text{otherwise}.
 		\end{cases}
 	\end{equation}
-Since network training is being performed as an on-line routine, the effective mean-squared NARX-NN  output error is low-passed by a factor $\lambda \in (0,1)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Each \kth Network MSE value is calculated after each prediction by:
+Since network training is being performed as an on-line routine, the effective mean-squared NARX-NN  output error is low-passed by a factor $\lambda \in \left(0,1\right)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Each \kth Network MSE value is calculated after each prediction by:
 	\begin{equation}
 		\vspace{-1mm}
 		MSE_{k} = \lambda \|\hat{\psi}_{k} - \psi_{k}\|_{2}^{2} + MSE_{k-1}(1-\lambda).
@@ -139,8 +127,8 @@ Replacing all dynamical terms with their associated discrete-time equivalents, a
 	\end{equation}
 where ${\theta}_{b,k}$ and $\dot{\theta}_{b,k}$ are samples of angular trunk position and rate, respectively.
 
-The joint-reference compensator output, $\tilde{q}_{k}^{r}$, is formed as a weighted sum of the original gaiting trajectory signal, ${q}_{k}^{r}$, and a correction component, formed using (\ref{eq::servo_control_dynamics}) and (\ref{eq::psuedo_torque_k}), as follows:
-	\vspace{-1mm}
+The joint-reference compensator output, $\tilde{q}_{k}^{r}$, is formed as a weighted sum of the original gaiting trajectories, ${q}_{k}^{r}$, and a correction component, formed using (\ref{eq::servo_control_dynamics}) and (\ref{eq::psuedo_torque_k}), as follows:
+	\vspace{-1.5mm}
 	\begin{equation}
 		\vspace{-1mm}
 	 	\tilde{q}_{k}^{r} 	= (1-\alpha) {q}_{k}^{r} + \alpha \left( k_{s}^{-1}  \left(  \hat{\tau}_{q,k}  \right) +  {q}_{1,k} \right)
