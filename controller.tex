@@ -10,9 +10,9 @@ The success of this learning mechanism, as it applies to the presented controlle
 		\SetImage{\ImageWidthRatio}{narx_network_diagram.png}
 		\caption{Parallel NARX-NN model with a linear output layer.}
 		\label{fig::narx_net}
-		\vspace{-7mm}
+		\vspace{-5.5mm}
 	\end{figure}
-Using the NARX-NN, the dynamical estimate $\hat{\Phi}_{k}$ is generated as a prediction of the sampled system dynamics, $\hat{\psi}_{k+1}$. The relationship between $\hat{\Phi}_{k}$ and the network prediction $\hat{\psi}_{k+1}$ will be made clear in the description of the network training signal given in (\ref{eq::training_signal}). The general input-output relationship of the NARX-NN predictor, $\mathscr{N}$, is described as follows:
+Using the NARX-NN, the dynamical estimate $\hat{\Phi}_{k}$ is generated as a prediction of the sampled system dynamics, $\hat{\psi}_{k+1}$. The relationship between $\hat{\Phi}_{k}$ and the target prediction $\hat{\psi}_{k+1}$ will be made clear in the description of the network training signal given in (\ref{eq::training_signal}). The general input-output relationship of the NARX-NN predictor, $\mathscr{N}$, is described as follows:
 	\begin{equation}
 		\vspace{-1.5mm}
 		\begin{split}
@@ -33,7 +33,7 @@ where ${U}_{k}^{N}$  and $\hat{\Psi}_{k}^{N}$ are collections of $N$ most recent
 \subsection{NARX-NN Training Regimen}
 	
 
-The  NARX-NN training signal is formulated to estimate $\Phi_{k}$ from the system dynamics. By (\ref{eq::sampled_dynamics}), it can be seen that $\Phi_{k}$ can be estimated if ${z}_{2,k+1}$ can be predicted. We consider the following target network prediction output, $\psi_{k+1}$,  defined by:
+The  NARX-NN training signal is formulated to estimate $\Phi_{k}$ from the system dynamics. By (\ref{eq::sampled_dynamics}), it can be seen that $\Phi_{k}$ can be estimated if ${z}_{2,k+1}$ can be predicted. We consider the following target prediction, $\psi_{k+1}$,  defined by:
 	\vspace{-2mm}
 	\begin{equation}
 		\vspace{-1.5mm}
@@ -55,13 +55,13 @@ This training signal formulation assumes that $\hat{M}_{1,k}$ represents $M_{1,k
 where 	$\hat{M}_{bb}\RealMat{6}{6}$, 
 		$\hat{M}_{bq}=\hat{M}_{qb}^{T} \RealMat{6}{(4m)}$, and  
 		$\hat{M}_{qq}\RealMat{(4m)}{(4m)}$. 
-It is particularly important that $\hat{M}_{bq}\neq0$ to reflect some degree of coupling between the joint states $q$ and the trunk states $p_{b}$ and $\theta_{b}$. In general, if $\hat{M}_{nom}$ should be selected to reflect the \emph{average} system mass matrix over the range of configurations, $z_{1}$, seen during gaiting. This approximation has shown to be adequate from our results, and depends on the assumption that changes in $\hat{M}_{1,k}$ are small  over the subset of state $z_{1}$ experiences during a periodic gaiting sequence. Future improvements of this controller will involve the formulation of a separate estimator for $M(z_{1})$, or a control/learning scheme with no direct dependence on $M(z_{1})$.
+It is particularly important that $\hat{M}_{bq}\neq0$ to reflect some degree of coupling between the joint states $q$ and the trunk states $p_{b}$ and $\theta_{b}$. In general, if $\hat{M}_{nom}$ should be selected to reflect the \emph{average} system mass matrix over the range of configurations, $z_{1}$, seen during gaiting. This approximation has shown to be adequate from our results, and depends on the assumption that changes in $\hat{M}_{1,k}$ are small for the subset of values that $z_{1}$ takes on during a periodic gaiting sequence. Future improvements of this controller will involve the formulation of a separate estimator for $M(z_{1})$, or a control/learning scheme with no direct dependence on $M(z_{1})$.
 	\begin{figure}[t!]
 		\centering
 		\SetImage{\ImageWidthRatio}{controller_diagram.png}
 		\caption{Full system diagram with NARX-NN compensator.}
 		\label{fig::sys_diagram}
-		\vspace{-7mm}
+		\vspace{-5.5mm}
 	\end{figure}
 
 Since $\hat{\psi}_{k+1}$ is non-causal, training is performed one time-step after a prediction is made using the input-output pair $\hat{\psi}_{k}$ and \{${\Psi}_{k-1}^{N}$, ${U}_{k-1}^{N}$\}. Note that $\hat{\psi}_{k}$ can be calculated directly using (\ref{eq::training_signal}) where all component signals are time-delayed by one time-step. Training can then be described by:
@@ -79,7 +79,7 @@ where $\gamma _{min} < \gamma < \gamma _{max}$ is a learning rate adapted using 
 	    \gamma (1+\zeta \beta),& \text{otherwise}.
 		\end{cases}
 	\end{equation}
-Since network training is being performed as an on-line routine, the effective mean-squared NARX-NN  output error is low-passed by a factor $\lambda \in \left(0,1\right)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Each \kth Network MSE value is calculated after each prediction by:
+Since network training is being performed as an on-line routine, the effective mean-squared NARX-NN  output error (MSE) is low-passed by a factor $\lambda \in \left(0,1\right)$. This update technique has been selected to ensure that outliers presented during training do not affect network learning updates as significantly as ``nominal" training pairs. Each \kth \hspace{0.25mm} MSE value is calculated one time-step after a prediction is made by:
 	\begin{equation}
 		\vspace{-1mm}
 		MSE_{k} = \lambda \|\hat{\psi}_{k} - \psi_{k}\|_{2}^{2} + MSE_{k-1}(1-\lambda).

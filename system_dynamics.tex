@@ -39,7 +39,7 @@ where $M_{1,k} = M(z_{1,k})$, $t = \Delta_{s} k$, and $\Delta_{s} \equiv (f_{s})
 \subsection{Joint-Controller Dynamics}
 %
 %
-The motor dynamics driving each joint need to be considered since, in our case, the input to the servo motors at each joint is a reference position command. In our compensation technique to follow, the combination of a neural network and inverse dynamics controller is used to produce an output torque which needs to be mixed  with the joint trajectories provided by the CPG. In this paper, we will utilize a simple model of the motor dynamics at each joint to produce the required compensation torques by an equivalent joint trajectory to be provided to the motor. We consider the motors as simple torque generators of the following form:
+The motor dynamics driving each joint need to be considered since, in our case, the input to the servo motors at each joint is an angular reference command. In our compensation technique to follow, the combination of a neural network and inverse dynamics controller is used to produce an output torque which needs to be mixed  with the joint trajectories provided by the CPG. In this paper, we will utilize a simple model of the motor dynamics at each joint to produce the required compensation torques by an equivalent joint trajectory to be followed by each motor. We consider the motors as simple torque generators of the following form:
 	\begin{equation}
 		\vspace{-1mm}
 		\tau_{q} = k_{s}(q^{r}-q)
