@@ -22,7 +22,8 @@ G.~Endo, J.~Morimoto, J.~Nakanishi, and G.~Cheng.
 L.~Righetti and A.J. Ijspeert.
 \newblock Programmable central pattern generators: an application to biped
   locomotion control.
-\newblock pages 1585--1590, May 2006.
+\newblock In {\em {P}roceedings 2006 {IEEE} {I}nternational {C}onference on
+  {R}obotics and {A}utomation}, pages 1585--1590, May 2006.
 
 \bibitem{Ijspeert2008}
 Auke~Jan Ijspeert.
@@ -32,21 +33,22 @@ Auke~Jan Ijspeert.
 
 \bibitem{Matos2010}
 Vitor Matos and Cristina~P. Santos.
-\newblock Omnidirectional locomotion in a quadruped robot: {A} {CPG}-based
+\newblock Omnidirectional locomotion in a quadruped robot: {A} {C}{P}{G}-based
   approach.
 \newblock In {\em {IEEE/RSJ} {I}nternational {C}onference on {I}ntelligent
   {R}obots and {S}ystems}, pages 3392--3397, Oct 2010.
 
 \bibitem{Ajallooeian2013}
-Ajallooeian{,} M., Gay{,} S., Tuleu{,} A., Sprowitz{,} A, and Ijspeert{,} A.J.
-\newblock Modular control of limit cycle locomotion over unperceived rough
-  terrain.
-\newblock pages 3390--3397, Nov 2013.
+M.~Ajallooeian, S.~Pouya, A~Sproewitz, and A.J. Ijspeert.
+\newblock Central {P}attern {G}enerators augmented with virtual model control
+  for quadruped rough terrain locomotion.
+\newblock In {\em {IEEE} {I}nternational {C}onference on {R}obotics and
+  {A}utomation}, pages 3321--3328, May 2013.
 
 \bibitem{Park2014}
 Meng Yee (Michael)~Chuah Park, Hae-Won and Sangbae Kim.
-\newblock Quadruped bounding control with variable duty cycle via vertical
-  impulse scaling.
+\newblock Quadruped {B}ounding {C}ontrol with {V}ariable {D}uty {C}ycle via
+  {V}ertical {I}mpulse {S}caling.
 \newblock 2014.
 
 \bibitem{Fukuoka2015}
@@ -57,21 +59,22 @@ Y.~Fukuoka, H.~Yasushi, and F.~Takahiro.
 
 \bibitem{Wieber2015}
 Tedrake R. Kuindersma~S. Wieber, P.-B.
-\newblock Modeling and control of legged robots.
+\newblock Modeling and {C}ontrol of {L}egged {R}obots.
 \newblock In Siciliano and Khatib, editors, {\em Springer Handbook of Robotics,
   2nd Ed}, Lecture Notes in Control and Information Sciences, chapter~48.
   Springer Berlin Heidelberg, 2015.
 
 \bibitem{Fukuoka2003}
 Y.~Fukuoka, H.~Kimura, Y.~Hada, and K.~Takase.
-\newblock Adaptive dynamic walking of a quadruped robot 'tekken' on irregular
+\newblock Adaptive dynamic walking of a quadruped robot '{T}ekken' on irregular
   terrain using a neural system model.
-\newblock In {\em Robotics and Automation, 2003. Proceedings. ICRA '03. IEEE
-  Int. Conf. on}, volume~2, pages 2037--2042 vol.2, Sept 2003.
+\newblock In {\em {IEEE} {I}nternational {C}onference on {R}obotics and
+  {A}utomation}, volume~2, pages 2037--2042 vol.2, Sept 2003.
 
 \bibitem{Wieber2006}
 P.-B. Wieber.
-\newblock Holonomy and nonholonomy in the dynamics of articulated motion.
+\newblock Holonomy and {N}onholonomy in the {D}ynamics of {A}rticulated
+  {M}otion.
 \newblock In Moritz Diehl and Katja Mombaur, editors, {\em Fast Motions in
   Biomechanics and Robotics}, volume 340 of {\em Lecture Notes in Control and
   Information Sciences}, pages 411--425. Springer Berlin Heidelberg, 2006.
@@ -91,24 +94,24 @@ Grant P.~M. Chen~S., Billings S.~A.
 
 \bibitem{Hihi1996}
 Salah~El Hihi and Yoshua Bengio.
-\newblock Hierarchical recurrent neural networks for long-term dependencies,
-  1996.
+\newblock Hierarchical {R}ecurrent {N}eural {N}etworks for {L}ong-{T}erm
+  {D}ependencies, 1996.
 
 \bibitem{Billings2013}
 S.~A Billings.
-\newblock {\em Nonlinear system identification : NARMAX methods in the time,
-  frequency, and spatio-temporal domains}.
+\newblock {\em Nonlinear system identification : {N}{A}{R}{M}{A}{X} methods in
+  the time, frequency, and spatio-temporal domains}.
 \newblock John Wiley and Sons Ltd, 2013.
 
 \bibitem{Nelles2001}
 Oliver Nelles.
-\newblock Neural networks with internal dynamics.
+\newblock Neural {N}etworks with {I}nternal {D}ynamics.
 \newblock In {\em Nonlinear System Identification}, pages 645--651. Springer
   Berlin Heidelberg, 2001.
 
 \bibitem{Rumelhart1988}
 David~E. Rumelhart, Geoffrey~E. Hinton, and Ronald~J. Williams.
-\newblock Neurocomputing: Foundations of research.
+\newblock Neurocomputing: {F}oundations of {R}esearch.
 \newblock chapter Learning Representations by Back-propagating Errors, pages
   696--699. MIT Press, Cambridge, MA, USA, 1988.
 
@@ -120,15 +123,15 @@ David~E. Rumelhart, Richard Durbin, Richard Golden, and Yves Chauvin.
 
 \bibitem{Battiti1992}
 Roberto Battiti.
-\newblock First and second-order methods for learning: between steepest descent
-  and newton's method.
+\newblock First and {S}econd-{O}rder {M}ethods for {L}earning: between
+  {S}teepest {D}escent and {N}ewton's {M}ethod.
 \newblock {\em Neural Computation}, 4:141--166, 1992.
 
 \bibitem{Magoulas1999}
 G.~D. Magoulas, M.~N. Vrahatis, and G.~S. Androulakis.
-\newblock Improving the convergence of the backpropagation algorithm using
-  learning rate adaptation methods.
-\newblock {\em Neural Comput.}, 11(7):1769--1796, oct 1999.
+\newblock Improving the {C}onvergence of the {B}ackpropagation {A}lgorithm
+  {U}sing {L}earning {R}ate {A}daptation {M}ethods.
+\newblock {\em Neural Computation}, 11(7):1769--1796, oct 1999.
 
 \bibitem{OpenDynamicsEngine}
 Russel Smith.

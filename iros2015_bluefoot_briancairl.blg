@@ -1,8 +1,34 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: iros2015_bluefoot_briancairl.aux
 The style file: unsrt.bst
 Database file #1: refs.bib
-Warning--empty journal in Righetti2006
-Warning--empty journal in Ajallooeian2013
+You're missing a field part---line 45 of file refs.bib
+ : title = 
+ :         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 576 of file refs.bib
+ : @article{Collins1993
+ :                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 590 of file refs.bib
+ : @article{Ajallooeian2013
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 654 of file refs.bib
+ : @article{Righetti2006
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 673 of file refs.bib
+ : @article{Ijspeert2008
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 686 of file refs.bib
+ : @inproceedings{Matos2010
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 712 of file refs.bib
+ : @inproceedings{Fukuoka2003
+ :                           ,
+I'm skipping whatever remains of this entry
 Name 1 in "Park, Hae-Won, Meng Yee (Michael) Chuah, and Sangbae Kim" has a comma at the end for entry Park2014
 while executing---line 944 of file unsrt.bst
 Warning--empty journal in Park2014
@@ -10,4 +36,4 @@ Too many commas in name 1 of "Wieber, P.-B., Tedrake R., Kuindersma S." for entr
 while executing---line 944 of file unsrt.bst
 Warning--empty booktitle in Rumelhart1988
 Warning--empty booktitle in Rumelhart1995
-(There were 2 error messages)
+(There were 9 error messages)
