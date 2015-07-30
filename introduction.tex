@@ -4,7 +4,7 @@ Legged robotic systems have long employed motion controllers based on limit cycl
 %(\IE not inherently formulated to incorporate feedback) 
 they often require the use of auxiliary control mechanisms to ensure gait and system stability. Namely, methods which consider the zero-moment point and center of gravity of a legged system are commonly used when designing controllers to stabilize oscillator-driven gaits, as summarized in \cite{Wieber2015}. %add ZMP references%
 
-Developments in CPG-based gait controllers have led to the incorporation of ``reflexive" feedback mechanisms aimed at correcting foot-placement during gaiting on uneven or slippery terrain. One such approach achieves active joint compliance control via the modification of CPG oscillator parameters. Modifications are performed according to aggregate joint feedback signals. In \cite{Endo2004} and \cite{Fukuoka2003}, CPG oscillators are modified by a using a single tuning parameter to achieve the aforementioned results.
+Developments in CPG-based gait controllers have led to the incorporation of ``reflexive" feedback mechanisms aimed at correcting foot-placement during gaiting on uneven or slippery terrain. One such approach achieves active joint compliance control via the modification of CPG oscillator parameters. Modifications are performed according to aggregate joint feedback signals. In \cite{Endo2004} and \cite{Fukuoka2003}, CPG oscillators are modified using a single tuning parameter to achieve the aforementioned results.
 
 In this paper, we consider disturbance rejection of a multi-legged platform and achieving constant, level orientation of the trunk (\IE a stable/level platform), although other orientations could be considered. 
 	\begin{figure}[t!]
@@ -32,4 +32,4 @@ To achieve disturbance rejection on the trunk orientation and attain a fixed ori
 
 The effectiveness of the proposed methodology will be shown through extensive simulation studies on a quadruped robot modeled after our in-house developed quadruped system (the BlueFoot Quadruped) during a CPG-driven trot gait. Results will highlight the robustness of the compensator during gaits at various speeds. We also include results which depict the effect of various of mixtures between the original CPG reference and NARX-NN compensator output signals. Lastly, some final remarks will be made about possible directions for enhancing the design of the compensator.
 
-In the upcoming sections, the dynamics of a general quadruped system will be described, along with the NARX-NN and its training. Finally, the simulation setup and outputs will be presented, along with a discussion of our results.
+In the upcoming sections, the dynamics of a general quadruped system will be described, along with the NARX-NN and its training. Finally, the simulator and experimental data will be presented, along with a discussion of our results.
