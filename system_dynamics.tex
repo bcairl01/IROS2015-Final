@@ -22,9 +22,10 @@ The dynamics in (\ref{eq::normal_form_dynamics}) can be realized in compact, sta
 		\end{split}
 		\label{eq::state_space_dynamics}
 	\end{equation}
-where $z_{1}=\eta$ and $z_{2}=\dot{\eta}$. The notation $\Phi(z_{1},z_{2},f_{ext})$ is introduced for convenience and represents a composite dynamical term. This term will be referred to more compactly, as $\Phi$, in the sections that follow.
+where $z_{1}=\eta$ and $z_{2}=\dot{\eta}$. 
+%The notation $\Phi(z_{1},z_{2},f_{ext})$ is introduced for convenience and represents a composite dynamical term. This term will be referred to more compactly, as $\Phi$, in the sections that follow.
 
-The system dynamics are considered in an approximate, discrete-time form for use in NARX-NN network training, as follows:
+The system dynamics are considered in an approximate, discrete-time form for use in NARX-NN network training as follows:
 	\begin{equation}
 		\vspace{-1.0mm}
 		\begin{split}
@@ -45,4 +46,4 @@ The motor dynamics driving each joint need to be considered since, in our case, 
 		\tau_{q} = k_{s}(q^{r}-q)
 		\label{eq::servo_control_dynamics}
 	\end{equation}
-where $k_{s}>0$ is a constant, scalar gain and $q^{r}$ is a joint position reference. The servos we are utilizing to drive the leg joints of the BlueFoot quadruped have high-gain position feedback which allows us to model the motors as a static block which transforms reference trajectories to torque outputs. All of these servos are identical, and thus have identical gains. One could instead consider the full motor dynamics for computing reference positions given a desired torque. The simple model stated above was adequate for achieving the desired results.
+where $k_{s}>0$ is a constant, scalar gain and $q^{r}$ is a joint position reference. The servos we are utilizing to drive the leg joints of the BlueFoot quadruped have high-gain position feedback which allows us to model the motors as a static block which transforms reference trajectories to torque outputs. All of these servos are identical, and thus have identical gains. One could instead consider the full motor dynamics for computing reference positions given a desired torque. The simple but realistic model stated above was adequate for achieving the desired results.
